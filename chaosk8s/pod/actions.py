@@ -61,19 +61,19 @@ def kill_main_process(label_selector: str = None, name_pattern:
     that is waited until the pumba pods are checked for correct execution.
     """
 
-    # determine the pods to kill
-    pods_to_kill = _select_pods(label_selector=label_selector,
-                                name_pattern=name_pattern,
-                                all=all, rand=rand,
-                                mode=mode, qty=qty,
-                                ns=ns, order=order,
-                                secrets=secrets)
-
-    # initiate pumba pods on the nodes which accommodate the pods whose
-    # processes to kill
     api = create_k8s_api_client(secrets)
 
     v1 = client.CoreV1Api(api)
+    # determine the pods to kill
+    pods_to_kill = _select_pods(v1=v1,label_selector=label_selector,
+                                name_pattern=name_pattern,
+                                all=all, rand=rand,
+                                mode=mode, qty=qty,
+                                ns=ns, order=order)
+
+    # initiate pumba pods on the nodes which accommodate the pods whose
+    # processes to kill
+
 
     i = 0
     timestamp = int(time.time())
