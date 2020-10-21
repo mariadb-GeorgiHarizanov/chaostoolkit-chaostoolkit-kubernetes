@@ -4,6 +4,7 @@ import json
 import math
 import random
 import re
+import time
 from typing import Any, Dict, List
 
 from chaoslib.exceptions import ActivityFailed
